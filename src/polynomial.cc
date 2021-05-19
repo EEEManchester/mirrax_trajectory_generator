@@ -9,7 +9,9 @@ Polynomial::Polynomial(ros::NodeHandle& nh)
       max_ang_a_(0.1),
       max_wheel_v_(3.85),
       max_leg_v_(0.36),
-      derivative_to_optimize(mav_trajectory_generation::derivative_order::ACCELERATION){
+      derivative_to_optimize(mav_trajectory_generation::derivative_order::VELOCITY)
+      // derivative_to_optimize(mav_trajectory_generation::derivative_order::ACCELERATION)
+{
         
   // Load params
   if (!nh_.getParam("/mirrax/velocity/max_lin_vel", max_v_)){
