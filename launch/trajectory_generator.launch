@@ -1,0 +1,8 @@
+<launch>
+  <arg name="frame_id" default="world"/>
+
+  <param name="frame_id" value="$(arg frame_id)"/>
+  
+  <node name="trajectory_node" pkg="mirrax_trajectory_generator" type="main" output="screen">
+  </node>
+</launch>

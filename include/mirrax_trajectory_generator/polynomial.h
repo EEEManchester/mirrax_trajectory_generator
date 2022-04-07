@@ -119,6 +119,7 @@ class Polynomial {
   mav_trajectory_generation::Trajectory trajectory_;
   
   bool zero_waypoint_velocity_;
+  std::string frame_id_;
 };
 
 #endif // POLYNOMIAL_H

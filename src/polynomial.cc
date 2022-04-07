@@ -2,6 +2,7 @@
 
 Polynomial::Polynomial(ros::NodeHandle& nh)
     : nh_(nh),
+      frame_id_("world"),
       z_offset_(0.4),
       max_v_(0.1),
       max_a_(0.1),
@@ -34,6 +35,7 @@ Polynomial::Polynomial(ros::NodeHandle& nh)
     zero_waypoint_velocity_ = false;
   }
   nh_.param("/mirrax/velocity/max_wheel_v", max_wheel_v_, max_wheel_v_);
+  nh_.param("frame_id", frame_id_, frame_id_);
 
   // Reduce wheel limit
   max_wheel_v_ *= 0.88;
@@ -556,11 +558,10 @@ bool Polynomial::publishTrajectory(const mav_trajectory_generation::Trajectory& 
   visualization_msgs::MarkerArray markers;
   double distance =
       0.2; // Distance by which to seperate additional markers. Set 0.0 to disable.
-  std::string frame_id = "world";
 
   mav_trajectory_generation::drawMavTrajectory(trajectory,
                                                distance,
-                                               frame_id,
+                                               frame_id_,
                                                &markers);
   pub_markers_.publish(markers);
 
@@ -568,7 +569,7 @@ bool Polynomial::publishTrajectory(const mav_trajectory_generation::Trajectory& 
   mav_planning_msgs::PolynomialTrajectory msg;
   mav_trajectory_generation::trajectoryToPolynomialTrajectoryMsg(trajectory,
                                                                  &msg);
-  msg.header.frame_id = "world";
+  msg.header.frame_id = frame_id_;
   pub_trajectory_.publish(msg);
 
   return true;
